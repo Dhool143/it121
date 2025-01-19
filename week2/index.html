@@ -2,21 +2,48 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Pig Latin translator</title>
 </head>
 <body>
-    <script>
-        phrase = prompt("Enter a phrase");
-        document.write("apple -", phrase);
-    
-        // Your pig-latin translation code here 
-        let name = ("apple" + "way");
-        document.write(name);
 
+<script>
+    phrase = prompt("Enter a phrase");
+    document.write("Enter a - ", phrase);
+
+
+    function translatePigLatin(str) {
+//  Create variables to be used
+ var pigLatin = "";
+ var vowel = /[aeiou]/ ;
+
+
+ // Check if the first character is a vowel
+ if (str[0].match(vowel)) {
+  pigLatin = str + "way";
+  } else if (str.match(vowel) === null) {
+  // Check if the string contains one consonants
+  pigLatin = str + "ay";
+  } else {
+  // Find two consonants before the first vowel.
+  var vowelIndice = str.indexOf(str.match(vowel)[0]);
+
+  // Take the string from the first vowel to the last char
+  // then add the consonants that were previously omitted and add the ending.
+   pigLatin = str.substr(vowelIndice) + str.substr(0, vowelIndice) + "ay";
+  }
+return pigLatin;
+}
+
+ let word = translatePigLatin (phrase );
+
+document.write ( " " ,word );
+
+
+
+
+    // Your pig-latin translation code here
     
-    </script>
-   
-    
+</script>
+
 </body>
 </html>
