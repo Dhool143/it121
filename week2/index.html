@@ -13,8 +13,8 @@
 
     function translatePigLatin(str) {
 //  Create variables to be used
- var pigLatin = "";
- var vowel = /[aeiou]/ ;
+ let pigLatin = "";
+ let vowel = /[aeiou]/ ;
 
 
  // Check if the first character is a vowel
@@ -25,11 +25,11 @@
   pigLatin = str + "ay";
   } else {
   // Find two consonants before the first vowel.
-  var vowelIndice = str.indexOf(str.match(vowel)[0]);
+ let vowelWord = str.indexOf(str.match(vowel)[0]);
 
   // Take the string from the first vowel to the last char
   // then add the consonants that were previously omitted and add the ending.
-   pigLatin = str.substr(vowelIndice) + str.substr(0, vowelIndice) + "ay";
+   pigLatin = str.substr(vowelWord) + str.substr(0, vowelWord) + "ay";
   }
 return pigLatin;
 }
