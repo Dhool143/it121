@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script
+            src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+            crossorigin="anonymous"></script>
+    <style>
+        .over {
+            background-color: orange;
+        }
+
+        .selected {
+            background-color: green;
+        }
+    </style>
+
+    <body>
+        <div id="buttons"></div>
+        <table border='1'>
+           
+                <tr>
+                    <th>name</th>
+                    <th>role</th>
+                    <th>house</th>
+                    <th>gender</th>
+                    <th>alignment</th>
+                </tr>
+          
+            
+        </table>
+        <button id="resetButton">reset</button>
+
+        <script>
+            // list of characters
+            let characters = [
+                { name: "Albus Dumbledore", role: "staff", house: "Gryffindor", gender: "m", alignment: "good" },
+                { name: "Nymphadora Tonks", role: "", house: "Hufflepuff", gender: "f", alignment: "good" },
+                { name: "Ron Weasley", role: "student", house: "Gryffindor", gender: "m", alignment: "good" },
+                { name: "Ginny Weasley", role: "student", house: "Gryffindor", gender: "f", alignment: "good" },
+                { name: "Hermione Granger", role: "student", house: "Gryffindor", gender: "f", alignment: "good" },
+                { name: "Mad-eye Moody", role: "staff", house: "", gender: "m", alignment: "good" },
+                { name: "Prof McGonagall", role: "staff", house: "Gryffindor", gender: "f", alignment: "good" },
+                { name: "Harry Potter", role: "student", house: "Gryffindor", gender: "m", alignment: "good" },
+                { name: "Draco Malfoy", role: "student", house: "Slytherin", gender: "m", alignment: "evil" },
+                { name: "Hagrid", role: "staff", house: "Gryffindor", gender: "m", alignment: "good" },
+                { name: "Luna Lovegood", role: "student", house: "Ravenclaw", gender: "f", alignment: "good" },
+                { name: "Voldemort", role: "", house: "Slytherin", gender: "m", alignment: "evil" },
+                { name: "Bellatrix Lestrange", role: "", house: "Slytherin", gender: "f", alignment: "evil" },
+                { name: "Severus Snape", role: "staff", house: "Slytherin", gender: "m", alignment: "?" }
+            ];
+
+            
+            $(document).ready(function () {
+            
+            // 1. Add a button for each 'house' value
+            const houses = ['Gryffindor', 'Hufflepuff', 'Slytherin', 'Ravenclaw'];
+            const buttonsContainer = $("#buttons");
+
+            // Use the filterTableByHouse function
+            houses.forEach(house => {
+                const button = $("<button></button>").text(house);
+                button.on("click", function () {
+                    filterTableByHouse(house); 
+                });
+                buttonsContainer.append(button);
+            });
+
+            // 2. Add table rows for each character
+            function Table() {
+                let table = $("table");
+                characters.forEach(character => {
+                    let row = $("<tr></tr>");
+                    row.append($("<td></td>").text(character.name));
+                    row.append($("<td></td>").text(character.role));
+                    row.append($("<td></td>").text(character.house));
+                    row.append($("<td></td>").text(character.gender));
+                    row.append($("<td></td>").text(character.alignment));
+                    table.append(row);
+                });
+            }
+
+            Table();
+
+            // 3. Set visible rows to alternating background color 
+            $("table td:visible").filter(":even").css("background-color", "yellow");
+            $("table td:visible").filter(":odd").css("background-color", "white");
+
+
+            // 4. Add click handler to show only rows matching selected 'house'
+            function filterTableByHouse(house) {
+                $("table tr").each(function () {
+                    let houseValue = $(this).find("td:eq(2)").text();
+                    if (houseValue === house) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            }
+
+            // 5. Add click handler to reset table
+            $("#resetButton").on("click",  (e)  =>{
+                $("table tr").show();
+            });
+       
+    
+    });
+
+</script>
+    </body>
+</html>
