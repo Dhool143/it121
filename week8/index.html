@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Weather Forecast</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <H3>Daily Weather Forecast</h3>
+    <hr>
+    <form id="testform">
+        City: <input type="text" name="city">
+        State:
+        <select name="state">
+            <option value="AL">Alabama</option>
+            <option value="AK">Alaska</option>
+            <option value="AZ">Arizona</option>
+            <option value="AR">Arkansas</option>
+            <option value="CA">California</option>
+            <option value="CO">Colorado</option>
+            <option value="CT">Connecticut</option>
+            <option value="DE">Delaware</option>
+            <option value="FL">Florida</option>
+            <option value="GA">Georgia</option>
+            <option value="HI">Hawaii</option>
+            <option value="ID">Idaho</option>
+            <option value="IL">Illinois</option>
+            <option value="IN">Indiana</option>
+            <option value="IA">Iowa</option>
+            <option value="KS">Kansas</option>
+            <option value="KY">Kentucky</option>
+            <option value="LA">Louisiana</option>
+            <option value="ME">Maine</option>
+            <option value="MD">Maryland</option>
+            <option value="MA">Massachusetts</option>
+            <option value="MI">Michigan</option>
+            <option value="MN">Minnesota</option>
+            <option value="MS">Mississippi</option>
+            <option value="MO">Missouri</option>
+            <option value="MT">Montana</option>
+            <option value="NE">Nebraska</option>
+            <option value="NV">Nevada</option>
+            <option value="NH">New Hampshire</option>
+            <option value="NJ">New Jersey</option>
+            <option value="NM">New Mexico</option>
+            <option value="NY">New York</option>
+            <option value="NC">North Carolina</option>
+            <option value="ND">North Dakota</option>
+            <option value="OH">Ohio</option>
+            <option value="OK">Oklahoma</option>
+            <option value="OR">Oregon</option>
+            <option value="PR">Puerto Rico</option>
+            <option value="PW">Palau</option>
+            <option value="PA">Pennsylvania</option>
+            <option value="RI">Rhode Island</option>
+            <option value="SC">South Carolina</option>
+            <option value="SD">South Dakota</option>
+            <option value="TN">Tennessee</option>
+            <option value="TX">Texas</option>
+            <option value="UT">Utah</option>
+            <option value="VT">Vermont</option>
+            <option value="VA">Virginia</option>
+            <option value="WA">Washington</option>
+            <option value="WV">West Virginia</option>
+            <option value="WI">Wisconsin</option>
+            <option value="WY">Wyoming</option>
+        </select>
+    </form>
+    <button>submit</button>
+    <div id="forecast"></div>
+
+    <script>
+        // change to your API
+        let API_KEY = "ceb57b465a84a4e30720c08a28401e6b";
+
+        // daily forecast API - https://openweathermap.org/forecast16
+        // geocoding API - https://openweathermap.org/api/geocoding-api
+
+        // NOTE - api docs incorrectly show examples using http instead of https
+
+        const kelvinToF = (value) => {
+            var fahrenheit = (((Number(value) - 273.15) * 9) / 5) + 32;
+            return fahrenheit.toFixed(2);
+        }
+
+
+        $('button').on('click', async (e) => {
+
+            
+
+            //Get city and state
+            let city = $("input[name=city]").val();
+            let state = $("select[name=state]").val();
+
+            //Geocoding API 
+
+            let geo_url = `https://api.openweathermap.org/geo/1.0/direct?q=${city},${state},&limit=&appid=${API_KEY}`;
+            
+            
+           
+            try {
+                const geo_response = await fetch(geo_url);
+                const geo_data = await geo_response.json();
+
+                let lat = geo_data[0].lat;
+                let lon = geo_data[0].lon;
+
+                //Daily forcast API
+                let forecast_url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}`;
+
+                const forecast_response = await fetch(forecast_url);
+                const forecast_data = await forecast_response.json();
+
+                //Display the forcast with icon url
+                let html = "<ul>";
+                forecast_data.list.forEach(forecast => {
+                    let forecast_date = new Date(forecast.dt * 1000);
+                    let icon_url = `http://openweathermap.org/img/w/${forecast.weather[0].icon}.png`
+                     html += `<li>Date: ${forecast_date} Temp: ${kelvinToF(forecast.main.temp)} <img src="${icon_url}"></li>`
+                });
+                html += "</ul>"; 
+                $("#forecast").html(html);
+
+
+            } catch (error) {
+                $("#forecast").html("API request failed");
+                console.log(error);
+            
+
+             // disable button to prevent double-submit
+            $("button").prop("disabled", true);
+            
+            }
+        });
+    </script>
+</body>
+
+</html>
