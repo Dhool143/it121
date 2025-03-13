@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   
+
+    <canvas id="Canvas1" width="500" height="400" style="border:10px;"></canvas>
+    <script>
+    const canvas = document.getElementById("Canvas1");
+    const context = canvas.getContext("2d");
+    
+    
+    // Draw a rectangle
+    context.beginPath();
+    context.rect(10, 100, 100, 70); 
+    context.fillStyle = "green";
+    context.fill();
+    context.strokeStyle = "black";
+    context.lineWidth = 2;
+    context.stroke();
+    context.closePath();
+    
+    // Draw a circle
+    context.beginPath();
+    context.arc(200, 100, 50, 0, Math.PI * 3); 
+    context.fillStyle = "purple";
+    context.fill();
+    context.strokeStyle = "black";
+    context.lineWidth = 2;
+    context.stroke();
+    context.closePath();
+    
+    // Draw a triangle
+    context.beginPath();
+    context.moveTo(300, 150); 
+    context.lineTo(350, 250); 
+    context.lineTo(250, 250); 
+    context.closePath(); 
+    context.fillStyle = "hotpink";
+    context.fill();
+    context.strokeStyle = "black";
+    context.lineWidth = 2;
+    context.stroke();
+    context.closePath();
+   
+
+   // Draw a line
+
+   context.beginPath();
+   context.moveTo(400,50 );
+   context.lineTo(500, 200);
+   context.strokeStyle = "blue";
+   context.lineWidth = 4;
+   context.stroke();
+   
+
+
+   </script>
+
+</body>
+</html>
