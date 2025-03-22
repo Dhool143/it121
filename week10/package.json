@@ -1,0 +1,16 @@
+{
+    "name": "it121",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "type": "module",
+    "scripts": {
+      "start": "node index.js"
+    },
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/Dhool143"
+    },
+    "author": "Fathiya",
+    "license": "ISC"
+  }
